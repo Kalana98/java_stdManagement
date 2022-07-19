@@ -1,0 +1,167 @@
+package com.student;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+
+public class StudentsDButil {
+	
+	private static boolean isSuccess; 
+	private static Connection con = null;
+	private static Statement stmt = null;
+	private static ResultSet rs = null;
+	
+	
+
+	
+	public static List<student> validate(String username, String password){
+		ArrayList<student> student = new ArrayList<>();
+		
+		try {
+			con = DBconnection.getConnection();
+			stmt = con.createStatement();
+			String sql = "select * from students where userName='"+username+"'and passw='"+password+"'";
+			ResultSet rs = stmt.executeQuery(sql);
+			
+			if(rs.next()) {
+				int id = rs.getInt(1);
+				String name = rs.getString(2);
+				String email= rs.getString(3);
+				int phoneNo = rs.getInt(4);
+				String address = rs.getString(5);
+				String userName = rs.getString(6);
+				String pass = rs.getString(7);
+				
+				student std = new student(id,name,email,phoneNo,address,userName,pass);
+				student.add(std);
+			}
+			
+			
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		
+		return student;
+	}
+
+	
+	
+	public static boolean insertStudent(String name,String email,String phoneNo,String address,String username,String password) {
+		
+		boolean isSuccess = false;
+						
+				try {
+					
+					con = DBconnection.getConnection();
+					stmt = con.createStatement();
+					String sql = "insert into students values (0,'"+name+"','"+email+"','"+phoneNo+"','"+address+"','"+username+"','"+password+"')";
+				    int rs = stmt.executeUpdate(sql);
+					
+					if(rs > 0) {
+						isSuccess = true;
+					}else {
+						isSuccess = false;
+					}
+					
+				}catch(Exception e){
+					e.printStackTrace();
+				}
+		
+		return isSuccess;
+	}
+	
+	
+	
+	public static boolean updateStudent(String id,String name,String email,String phoneNo,String address,String username,String password) {
+		
+		try {
+			int i=Integer.parseInt(phoneNo); 
+			con = DBconnection.getConnection();
+			stmt = con.createStatement();
+			String sql = "update students set name='"+name+"',email='"+email+"',phoneNo='"+i+"',address='"+address+"',userName='"+username+"',passw='"+password+"'where id='"+id+"'";
+					
+					
+		    int rs = stmt.executeUpdate(sql);
+			
+			if(rs > 0) {
+				isSuccess = true;
+			}else {
+				isSuccess = false;
+			}
+			
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+
+		return isSuccess;
+	}
+	
+	
+	public static List<student> getStudentDetails(String id){
+		int convertedID = Integer.parseInt(id);
+		
+		ArrayList<student> std = new ArrayList<>();
+		
+		try {
+			con = DBconnection.getConnection();
+			stmt = con.createStatement();
+			String sql = "select * from students where id='"+convertedID+"'";
+			rs = stmt.executeQuery(sql);
+			
+			while(rs.next()){
+				int Id = rs.getInt(1);
+				String name = rs.getString(2);
+				String email = rs.getString(3);
+				int phoneNo = rs.getInt(4);
+				String address = rs.getString(5);
+				String username = rs.getString(6);
+				String password = rs.getString(7);
+				
+				student s = new student(Id,name,email,phoneNo,address,username,password);
+				std.add(s);
+			}
+			
+			
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return std;
+	}
+	public static boolean deleteStudent(String id) {
+		
+		int convId = Integer.parseInt(id);
+		
+		try {
+			con = DBconnection.getConnection();
+			stmt = con.createStatement();
+			String sql = "delete from students where id='"+convId+"'";
+			int rs = stmt.executeUpdate(sql);
+			
+		if(rs>0) {
+			isSuccess=true;
+		}else {
+			isSuccess=false;
+		}
+			
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		
+		
+		return isSuccess;
+	}
+	
+	
+
+
+
+	
+	
+	
+	
+	
+	
+}

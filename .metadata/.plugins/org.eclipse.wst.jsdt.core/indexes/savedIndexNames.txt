@@ -1,0 +1,7 @@
+INDEX VERSION 1.4+D:\Sliit\stdManagement\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
+3152452917.index
+137400954.index
+3954422200.index
+2628698361.index
+1936188349.index
+3502061569.index

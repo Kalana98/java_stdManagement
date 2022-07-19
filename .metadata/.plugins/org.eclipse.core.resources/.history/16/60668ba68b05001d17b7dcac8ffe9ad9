@@ -1,0 +1,45 @@
+package com.student;
+
+import java.util.List;
+import java.io.PrintWriter;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+@WebServlet("/StudentLogin")
+public class StudentLogin extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		//getting data from login.jsp page
+		
+		PrintWriter out =response.getWriter();
+		response.setContentType("text/html");
+		
+		String username = request.getParameter("uId");
+		String password = request.getParameter("pw");
+		boolean isTrue;
+		
+		isTrue = StudentsDButil.validate(username, password);
+		
+		if(isTrue==true) {
+			List<student> stdDetails = StudentsDButil.getStudent(username);
+			request.setAttribute("stdDetails", stdDetails);
+			
+			RequestDispatcher dis = request.getRequestDispatcher("index.jsp");
+			dis.forward(request, response);
+		}else {
+			out.println("<script type='text/javascript'>");
+			out.println("alert('Your username or password is incorrect');");
+			out.println("location='login.jsp'");
+			out.println("</script>");
+			
+		}
+		
+	}
+
+}

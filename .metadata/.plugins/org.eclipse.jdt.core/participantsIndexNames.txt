@@ -1,0 +1,7 @@
+INDEX VERSION 1.131
+D:\Sliit\stdManagement\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\4023433592.index
+\studentManagement\src\main\java
+D:\Sliit\stdManagement\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\1274023655.index
+\newstd\src\main\java
+D:\Sliit\stdManagement\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\1761365245.index
+\newstd\src\main\java
